@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DressEase - Premium Dress Rental & Booking Boutique">
+  <title>DressEase | Premium Dress Rental & Booking</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ivory: '#FBF7F0',
+            cream: '#F4EDE2',
+            burgundy: '#6D1835',
+            burgundyDark: '#4B1025',
+            gold: '#C6A15B',
+            goldLight: '#E5CF9B',
+            ink: '#241A1D',
+            muted: '#75696B'
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif']
+          },
+          boxShadow: {
+            luxury: '0 20px 60px rgba(75, 16, 37, 0.12)',
+            soft: '0 10px 30px rgba(36, 26, 29, 0.08)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #FBF7F0;
+      color: #241A1D;
+    }
+
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .section-hidden {
+      display: none !important;
+    }
+
+    .nav-active {
+      color: #6D1835 !important;
+      font-weight: 700;
+    }
+
+    .hero-pattern {
+      background:
+        radial-gradient(circle at 15% 20%, rgba(198,161,91,.16), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(109,24,53,.10), transparent 30%),
+        linear-gradient(135deg, #FBF7F0 0%, #F4EDE2 100%);
+    }
+
+    .glass {
+      background: rgba(255,255,255,.76);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .dress-card img {
+      transition: transform .6s ease;
+    }
+
+    .dress-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .dress-card {
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .dress-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .toast {
+      animation: toastIn .35s ease forwards;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    .fade-up {
+      animation: fadeUp .7s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #C6A15B;
+      border-radius: 999px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #C6A15B !important;
+      box-shadow: 0 0 0 3px rgba(198,161,91,.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 border-b border-black/5 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-20 flex items-center justify-between">
+
+        <button onclick="showSection('home')" class="flex items-center gap-3 text-left">
+          <div class="w-11 h-11 rounded-full bg-burgundy text-white flex items-center justify-center shadow-soft">
+            <span class="font-display text-xl">D</span>
+          </div>
+          <div>
+            <div class="font-display text-2xl font-bold text-burgundy leading-none">DressEase</div>
+            <div class="text-[10px] tracking-[.25em] uppercase text-muted mt-1">Rent • Wear • Return</div>
+          </div>
+        </button>
+
+        <nav class="hidden md:flex items-center gap-7">
+          <button data-nav="home" onclick="showSection('home')" class="nav-link nav-active text-sm text-muted hover:text-burgundy transition">Home</button>
+          <button data-nav="catalog" onclick="showSection('catalog')" class="nav-link text-sm text-muted hover:text-burgundy transition">Collection</button>
+          <button data-nav="booking" onclick="showSection('booking')" class="nav-link text-sm text-muted hover:text-burgundy transition">Book a Dress</button>
+          <button data-nav="about" onclick="showSection('about')" class="nav-link text-sm text-muted hover:text-burgundy transition">About</button>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openLogin()" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full border border-burgundy/20 text-burgundy text-sm font-semibold hover:bg-burgundy hover:text-white transition">
+            <span>♙</span> Sign In
+          </button>
+          <button onclick="showSection('catalog')" class="hidden sm:block px-5 py-2.5 rounded-full bg-burgundy text-white text-sm font-semibold hover:bg-burgundyDark transition shadow-soft">
+            Explore Dresses
+          </button>
+          <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 rounded-full border border-black/10 flex items-center justify-center">
+            ☰
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="hidden md:hidden pb-4 border-t border-black/5 pt-3">
+        <div class="grid gap-2">
+          <button onclick="showSection('home');toggleMobileMenu()" class="text-left px-4 py-3 rounded-xl hover:bg-cream">Home</button>
+          <button onclick="showSection('catalog');toggleMobileMenu()" class="text-left px-4 py-3 rounded-xl hover:bg-cream">Collection</button>
+          <button onclick="showSection('booking');toggleMobileMenu()" class="text-left px-4 py-3 rounded-xl hover:bg-cream">Book a Dress</button>
+          <button onclick="showSection('about');toggleMobileMenu()" class="text-left px-4 py-3 rounded-xl hover:bg-cream">About</button>
+          <button onclick="openLogin();toggleMobileMenu()" class="text-left px-4 py-3 rounded-xl hover:bg-cream text-burgundy font-semibold">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ================= HOME SECTION ================= -->
+  <section id="home" class="spa-section hero-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <div class="fade-up">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-gold/30 text-burgundy text-xs font-bold tracking-widest uppercase mb-6">
+            <span class="w-2 h-2 rounded-full bg-gold"></span>
+            Premium Dress Rental Boutique
+          </div>
+
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.02] text-ink">
+            Dress for the
+            <span class="text-burgundy italic">moment.</span>
+          </h1>
+
+          <p class="mt-6 text-muted text-base sm:text-lg leading-8 max-w-xl">
+            Discover elegant outfits for weddings, celebrations, parties and unforgettable occasions.
+            Choose your look, reserve your dates, wear it beautifully and return it with ease.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mt-8">
+            <button onclick="showSection('catalog')" class="px-6 py-3.5 rounded-full bg-burgundy text-white font-semibold hover:bg-burgundyDark transition shadow-luxury">
+              Explore Collection →
+            </button>
+            <button onclick="showSection('booking')" class="px-6 py-3.5 rounded-full border border-burgundy/25 text-burgundy font-semibold hover:bg-white transition">
+              Find Your Look
+            </button>
+          </div>
+
+          <div class="grid grid-cols-3 gap-5 mt-10 max-w-lg">
+            <div>
+              <div class="font-display text-3xl font-bold text-burgundy">500+</div>
+              <div class="text-xs text-muted mt-1">Designer Looks</div>
+            </div>
+            <div>
+              <div class="font-display text-3xl font-bold text-burgundy">4.9★</div>
+              <div class="text-xs text-muted mt-1">Customer Rating</div>
+            </div>
+            <div>
+              <div class="font-display text-3xl font-bold text-burgundy">24/7</div>
+              <div class="text-xs text-muted mt-1">Booking Access</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute -top-5 -right-3 sm:right-8 w-28 h-28 rounded-full bg-gold/20 blur-2xl"></div>
+          <div class="absolute -bottom-5 -left-3 w-32 h-32 rounded-full bg-burgundy/10 blur-2xl"></div>
+
+          <div class="relative rounded-[2rem] overflow-hidden shadow-luxury bg-white p-3">
+            <img
+              src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1000&q=85"
+              alt="Elegant premium dress"
+              class="w-full h-[500px] sm:h-[600px] object-cover rounded-[1.5rem]"
+              onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%221000%22 viewBox=%220 0 800 1000%22%3E%3Crect width=%22800%22 height=%221000%22 fill=%22%23F4EDE2%22/%3E%3Ctext x=%22400%22 y=%22500%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2240%22 fill=%22%236D1835%22%3EDressEase%3C/text%3E%3C/svg%3E'"
+            >
+
+            <div class="absolute bottom-8 left-8 right-8 glass rounded-2xl p-5 border border-white/70">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-muted">Featured Look</p>
+                  <h3 class="font-display text-2xl font-bold text-burgundy">Royal Maroon Lehenga</h3>
+                  <p class="text-sm text-muted mt-1">From ₹2,999 / 2 days</p>
+                </div>
+                <button onclick="openQuickView(1)" class="w-11 h-11 rounded-full bg-burgundy text-white flex items-center justify-center hover:bg-burgundyDark">
+                  →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- HOME FEATURES -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-black/5">
+          <div class="w-11 h-11 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center text-xl mb-4">📅</div>
+          <h3 class="font-semibold">Date Availability</h3>
+          <p class="text-sm text-muted mt-2">Check whether your favourite dress is available for your event dates.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-black/5">
+          <div class="w-11 h-11 rounded-xl bg-gold/15 text-burgundy flex items-center justify-center text-xl mb-4">✨</div>
+          <h3 class="font-semibold">Find Your Look</h3>
+          <p class="text-sm text-muted mt-2">Filter by occasion, style, size and budget to discover your match.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-black/5">
+          <div class="w-11 h-11 rounded-xl bg-burgundy/10 text-burgundy flex items-center justify-center text-xl mb-4">🔒</div>
+          <h3 class="font-semibold">Secure Booking</h3>
+          <p class="text-sm text-muted mt-2">Transparent rental pricing with a refundable security deposit.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-black/5">
+          <div class="w-11 h-11 rounded-xl bg-gold/15 text-burgundy flex items-center justify-center text-xl mb-4">↩️</div>
+          <h3 class="font-semibold">Easy Returns</h3>
+          <p class="text-sm text-muted mt-2">Track your rental and return status from your booking dashboard.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= CATALOG SECTION ================= -->
+  <section id="catalog" class="spa-section section-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-[.25em] text-gold">The Collection</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-bold text-burgundy mt-3">Find your perfect look</h2>
+        <p class="text-muted mt-4">
+          Explore curated outfits available for weddings, celebrations, parties and special occasions.
+        </p>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="mt-10 bg-white rounded-3xl p-4 sm:p-5 shadow-soft border border-black/5">
+
+        <div class="flex flex-col lg:flex-row gap-4 justify-between">
+
+          <div id="filterTabs" class="flex gap-2 overflow-x-auto pb-1 custom-scroll">
+            <button data-category="All" class="filter-btn active-filter whitespace-nowrap px-4 py-2.5 rounded-full bg-burgundy text-white text-sm font-semibold">All</button>
+            <button data-category="Lehengas & Bridal Wear" class="filter-btn whitespace-nowrap px-4 py-2.5 rounded-full bg-cream text-burgundy text-sm font-semibold">Lehengas & Bridal</button>
+            <button data-category="Sarees & Traditional Wear" class="filter-btn whitespace-nowrap px-4 py-2.5 rounded-full bg-cream text-burgundy text-sm font-semibold">Sarees</button>
+            <button data-category="Gowns & Party Wear" class="filter-btn whitespace-nowrap px-4 py-2.5 rounded-full bg-cream text-burgundy text-sm font-semibold">Gowns & Party</button>
+            <button data-category="Sherwanis & Men's Ethnic Wear" class="filter-btn whitespace-nowrap px-4 py-2.5 rounded-full bg-cream text-burgundy text-sm font-semibold">Men's Ethnic</button>
+            <button data-category="Kids' Occasion Wear" class="filter-btn whitespace-nowrap px-4 py-2.5 rounded-full bg-cream text-burgundy text-sm font-semibold">Kids</button>
+          </div>
+
+          <div class="relative min-w-[230px]">
+            <input id="searchInput" type="search" placeholder="Search dresses..." class="w-full rounded-full border border-black/10 px-5 py-2.5 text-sm bg-ivory">
+            <span class="absolute right-4 top-2.5">⌕</span>
+          </div>
+
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-3 mt-4">
+          <select id="sizeFilter" class="rounded-xl border border-black/10 px-4 py-3 bg-ivory text-sm">
+            <option value="All">All Sizes</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+
+          <select id="occasionFilter" class="rounded-xl border border-black/10 px-4 py-3 bg-ivory text-sm">
+            <option value="All">All Occasions</option>
+            <option value="Wedding">Wedding</option>
+            <option value="Reception">Reception</option>
+            <option value="Party">Party</option>
+            <option value="Festival">Festival</option>
+            <option value="Photoshoot">Photoshoot</option>
+          </select>
+
+          <select id="sortFilter" class="rounded-xl border border-black/10 px-4 py-3 bg-ivory text-sm">
+            <option value="featured">Sort: Featured</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between mt-8 mb-5">
+        <p id="catalogCount" class="text-sm text-muted"></p>
+        <button onclick="clearFilters()" class="text-sm text-burgundy font-semibold hover:underline">Clear filters</button>
+      </div>
+
+      <div id="catalogGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+
+      <div id="emptyState" class="hidden text-center py-20">
+        <div class="text-5xl">👗</div>
+        <h3 class="font-display text-2xl text-burgundy mt-4">No dresses found</h3>
+        <p class="text-muted mt-2">Try changing your filters or search term.</p>
+        <button onclick="clearFilters()" class="mt-5 px-5 py-2.5 rounded-full bg-burgundy text-white">Reset Filters</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= BOOKING SECTION ================= -->
+  <section id="booking" class="spa-section section-hidden bg-cream/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+
+      <div class="grid lg:grid-cols-[1fr_1.3fr] gap-10 items-start">
+
+        <div>
+          <span class="text-xs font-bold uppercase tracking-[.25em] text-gold">Personal Styling</span>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-burgundy mt-3">
+            Find Your Look
+          </h2>
+          <p class="text-muted leading-7 mt-4">
+            Tell us your occasion, style, size and budget. DressEase will help you discover suitable rental options.
+          </p>
+
+          <div class="mt-8 space-y-4">
+            <div class="flex gap-4">
+              <div class="w-10 h-10 shrink-0 rounded-xl bg-burgundy text-white flex items-center justify-center">1</div>
+              <div>
+                <h3 class="font-semibold">Choose your style</h3>
+                <p class="text-sm text-muted mt-1">Select the category and occasion for your event.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="w-10 h-10 shrink-0 rounded-xl bg-burgundy text-white flex items-center justify-center">2</div>
+              <div>
+                <h3 class="font-semibold">Check availability</h3>
+                <p class="text-sm text-muted mt-1">Enter your rental dates to avoid booking conflicts.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="w-10 h-10 shrink-0 rounded-xl bg-burgundy text-white flex items-center justify-center">3</div>
+              <div>
+                <h3 class="font-semibold">Book through WhatsApp</h3>
+                <p class="text-sm text-muted mt-1">Your request is sent directly to our booking team.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 rounded-2xl bg-burgundy text-white p-6">
+            <p class="text-xs uppercase tracking-widest text-goldLight">Need help?</p>
+            <h3 class="font-display text-2xl mt-2">Talk to our styling team</h3>
+            <a href="https://wa.me/919952030026" target="_blank" class="inline-block mt-4 text-sm font-semibold border-b border-goldLight pb-1">
+              WhatsApp: +91 99520 30026
+            </a>
+          </div>
+        </div>
+
+
+        <div class="bg-white rounded-[2rem] shadow-luxury border border-black/5 p-5 sm:p-8">
+
+          <form id="bookingForm">
+
+            <div class="flex items-center justify-between mb-7">
+              <div>
+                <h3 class="font-display text-2xl font-bold text-burgundy">Rental Request</h3>
+                <p class="text-sm text-muted mt-1">Fill in your details to request a booking.</p>
+              </div>
+              <div class="hidden sm:flex w-12 h-12 rounded-full bg-burgundy/10 text-burgundy items-center justify-center text-xl">👗</div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Full Name *</label>
+                <input id="customerName" required type="text" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory" placeholder="Your name">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Phone Number *</label>
+                <input id="customerPhone" required type="tel" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory" placeholder="+91">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Category *</label>
+                <select id="bookingCategory" required class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+                  <option value="">Select category</option>
+                  <option>Lehengas & Bridal Wear</option>
+                  <option>Sarees & Traditional Wear</option>
+                  <option>Gowns & Party Wear</option>
+                  <option>Sherwanis & Men's Ethnic Wear</option>
+                  <option>Kids' Occasion Wear</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Dress *</label>
+                <select id="bookingDress" required class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+                  <option value="">Select a category first</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Occasion *</label>
+                <select id="bookingOccasion" required class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+                  <option value="">Select occasion</option>
+                  <option>Wedding</option>
+                  <option>Reception</option>
+                  <option>Party</option>
+                  <option>Festival</option>
+                  <option>Photoshoot</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Size *</label>
+                <select id="bookingSize" required class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+                  <option value="">Select size</option>
+                  <option>XS</option>
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                  <option>XL</option>
+                  <option>XXL</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Rental Start Date *</label>
+                <input id="startDate" required type="date" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Return Date *</label>
+                <input id="returnDate" required type="date" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Preferred Colour</label>
+                <select id="bookingColour" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+                  <option>Any Colour</option>
+                  <option>Maroon</option>
+                  <option>Red</option>
+                  <option>Pink</option>
+                  <option>Black</option>
+                  <option>Gold</option>
+                  <option>Green</option>
+                  <option>Blue</option>
+                  <option>Ivory</option>
+                  <option>White</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold mb-2">Budget</label>
+                <select id="bookingBudget" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+                  <option value="Any">Any Budget</option>
+                  <option value="2000">Under ₹2,000</option>
+                  <option value="3000">Under ₹3,000</option>
+                  <option value="5000">Under ₹5,000</option>
+                  <option value="10000">Under ₹10,000</option>
+                </select>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-sm font-semibold mb-2">Additional Requirements</label>
+                <textarea id="notes" rows="4" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory resize-none" placeholder="Tell us about your event, fitting requirements or styling preferences..."></textarea>
+              </div>
+
+            </div>
+
+            <div id="availabilityBox" class="hidden mt-5 rounded-xl p-4 text-sm"></div>
+
+            <div class="mt-6 rounded-2xl bg-ivory border border-gold/20 p-5">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-sm text-muted">Estimated Rental</p>
+                  <p id="estimatedPrice" class="font-display text-2xl font-bold text-burgundy">Select a dress</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-xs text-muted">Security Deposit</p>
+                  <p id="estimatedDeposit" class="font-semibold text-ink">—</p>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="w-full mt-6 py-4 rounded-xl bg-burgundy text-white font-semibold hover:bg-burgundyDark transition shadow-soft">
+              Request Booking via WhatsApp →
+            </button>
+
+            <p class="text-xs text-muted text-center mt-3">
+              Your booking request will open WhatsApp with your selected details.
+            </p>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= ABOUT SECTION ================= -->
+  <section id="about" class="spa-section section-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <div>
+          <span class="text-xs font-bold uppercase tracking-[.25em] text-gold">Our Story</span>
+
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-burgundy mt-3">
+            Luxury looks.<br>
+            <span class="italic">Smarter rentals.</span>
+          </h2>
+
+          <p class="text-muted leading-8 mt-6">
+            DressEase is a premium dress rental and booking boutique created for people who want
+            memorable fashion without purchasing an outfit for every occasion.
+          </p>
+
+          <p class="text-muted leading-8 mt-4">
+            From bridal celebrations and receptions to parties and photoshoots, our collection
+            brings together elegant styles with a simple rental experience.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mt-7">
+            <span class="px-4 py-2 rounded-full bg-cream text-burgundy text-sm">Curated Collection</span>
+            <span class="px-4 py-2 rounded-full bg-cream text-burgundy text-sm">Date Availability</span>
+            <span class="px-4 py-2 rounded-full bg-cream text-burgundy text-sm">Easy Returns</span>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="rounded-[2rem] overflow-hidden shadow-luxury bg-white p-3">
+            <img
+              src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=1000&q=85"
+              alt="Premium fashion collection"
+              class="w-full h-[500px] object-cover rounded-[1.5rem]"
+              onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22800%22%3E%3Crect width=%22800%22 height=%22800%22 fill=%22%23F4EDE2%22/%3E%3Ctext x=%22400%22 y=%22400%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2240%22 fill=%22%236D1835%22%3EDressEase Collection%3C/text%3E%3C/svg%3E'"
+            >
+          </div>
+
+          <div class="absolute -bottom-5 -left-3 sm:left-5 bg-white rounded-2xl shadow-soft p-5 border border-black/5">
+            <p class="text-xs text-muted">Customer Satisfaction</p>
+            <p class="font-display text-3xl font-bold text-burgundy">98%</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- METRICS -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-20">
+
+        <div class="bg-white rounded-2xl p-7 text-center shadow-soft border border-black/5">
+          <div class="font-display text-4xl font-bold text-burgundy counter" data-target="500">0</div>
+          <p class="text-sm text-muted mt-2">Premium Dresses</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 text-center shadow-soft border border-black/5">
+          <div class="font-display text-4xl font-bold text-burgundy counter" data-target="1200">0</div>
+          <p class="text-sm text-muted mt-2">Happy Rentals</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 text-center shadow-soft border border-black/5">
+          <div class="font-display text-4xl font-bold text-burgundy counter" data-target="25">0</div>
+          <p class="text-sm text-muted mt-2">Designer Collections</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 text-center shadow-soft border border-black/5">
+          <div class="font-display text-4xl font-bold text-burgundy counter" data-target="98">0</div>
+          <p class="text-sm text-muted mt-2">Customer Satisfaction %</p>
+        </div>
+
+      </div>
+
+
+      <!-- HOW IT WORKS -->
+      <div class="mt-20">
+        <div class="text-center">
+          <span class="text-xs font-bold uppercase tracking-[.25em] text-gold">Simple Process</span>
+          <h2 class="font-display text-4xl font-bold text-burgundy mt-3">Rent. Wear. Return.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-5 mt-10">
+
+          <div class="text-center">
+            <div class="mx-auto w-16 h-16 rounded-full bg-burgundy text-white flex items-center justify-center font-display text-2xl">01</div>
+            <h3 class="font-semibold mt-4">Discover</h3>
+            <p class="text-sm text-muted mt-2">Browse our curated dress collection.</p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto w-16 h-16 rounded-full bg-burgundy text-white flex items-center justify-center font-display text-2xl">02</div>
+            <h3 class="font-semibold mt-4">Reserve</h3>
+            <p class="text-sm text-muted mt-2">Choose your dates and submit a request.</p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto w-16 h-16 rounded-full bg-burgundy text-white flex items-center justify-center font-display text-2xl">03</div>
+            <h3 class="font-semibold mt-4">Wear</h3>
+            <p class="text-sm text-muted mt-2">Make your occasion memorable.</p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto w-16 h-16 rounded-full bg-burgundy text-white flex items-center justify-center font-display text-2xl">04</div>
+            <h3 class="font-semibold mt-4">Return</h3>
+            <p class="text-sm text-muted mt-2">Return the outfit and complete your rental.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-burgundy text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+      <div class="grid md:grid-cols-4 gap-8">
+
+        <div class="md:col-span-2">
+          <div class="font-display text-3xl font-bold">DressEase</div>
+          <p class="text-white/70 mt-3 max-w-md leading-7">
+            Premium dress rentals for life's most beautiful moments.
+            Rent your dream look without buying it.
+          </p>
+
+          <a href="https://wa.me/919952030026" target="_blank" class="inline-flex items-center gap-2 mt-5 px-5 py-3 rounded-full bg-white text-burgundy font-semibold text-sm hover:bg-goldLight transition">
+            💬 WhatsApp Booking
+          </a>
+        </div>
+
+        <div>
+          <h4 class="font-semibold">Quick Links</h4>
+          <div class="grid gap-3 mt-4 text-sm text-white/70">
+            <button onclick="showSection('home')" class="text-left hover:text-white">Home</button>
+            <button onclick="showSection('catalog')" class="text-left hover:text-white">Collection</button>
+            <button onclick="showSection('booking')" class="text-left hover:text-white">Book a Dress</button>
+            <button onclick="showSection('about')" class="text-left hover:text-white">About Us</button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold">Contact</h4>
+          <div class="space-y-3 mt-4 text-sm text-white/70">
+            <p>📞 +91 99520 30026</p>
+            <p>💬 WhatsApp Available</p>
+            <p>📍 Chennai, Tamil Nadu</p>
+            <p>🕐 10:00 AM – 8:00 PM</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-white/50">
+        <p>© 2026 DressEase. All rights reserved.</p>
+        <p>Premium Dress Rental & Booking Boutique</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ================= QUICK VIEW MODAL ================= -->
+  <div id="quickViewModal" class="hidden fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center">
+    <div class="bg-white rounded-[2rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto custom-scroll">
+
+      <div class="grid md:grid-cols-2">
+
+        <div class="relative">
+          <img id="modalImage" src="" alt="Dress preview" class="w-full h-[420px] md:h-full min-h-[420px] object-cover rounded-t-[2rem] md:rounded-l-[2rem] md:rounded-tr-none" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%221000%22%3E%3Crect width=%22800%22 height=%221000%22 fill=%22%23F4EDE2%22/%3E%3Ctext x=%22400%22 y=%22500%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2240%22 fill=%22%236D1835%22%3EDressEase%3C/text%3E%3C/svg%3E'">
+          <button onclick="closeQuickView()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 text-burgundy shadow">✕</button>
+        </div>
+
+        <div class="p-7">
+          <span id="modalCategory" class="text-xs uppercase tracking-widest text-gold font-bold"></span>
+          <h2 id="modalName" class="font-display text-3xl font-bold text-burgundy mt-2"></h2>
+          <p id="modalDescription" class="text-muted leading-7 mt-4"></p>
+
+          <div class="grid grid-cols-2 gap-3 mt-6">
+            <div class="bg-ivory rounded-xl p-4">
+              <p class="text-xs text-muted">Rental Price</p>
+              <p id="modalPrice" class="font-bold text-burgundy mt-1"></p>
+            </div>
+            <div class="bg-ivory rounded-xl p-4">
+              <p class="text-xs text-muted">Security Deposit</p>
+              <p id="modalDeposit" class="font-bold text-burgundy mt-1"></p>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <p class="text-sm font-semibold">Available Sizes</p>
+            <div id="modalSizes" class="flex flex-wrap gap-2 mt-2"></div>
+          </div>
+
+          <div class="mt-5">
+            <p class="text-sm font-semibold">Available Colours</p>
+            <div id="modalColours" class="flex flex-wrap gap-2 mt-2"></div>
+          </div>
+
+          <button id="modalBookButton" class="w-full mt-7 py-3.5 rounded-xl bg-burgundy text-white font-semibold hover:bg-burgundyDark">
+            Book This Dress
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= LOGIN MODAL ================= -->
+  <div id="loginModal" class="hidden fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center">
+    <div class="bg-white rounded-[2rem] max-w-md w-full p-7 shadow-luxury">
+
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-gold font-bold">DressEase Account</p>
+          <h2 class="font-display text-3xl font-bold text-burgundy mt-2">Welcome back</h2>
+        </div>
+        <button onclick="closeLogin()" class="w-9 h-9 rounded-full bg-cream">✕</button>
+      </div>
+
+      <div class="mt-7 space-y-4">
+        <input id="loginEmail" type="email" placeholder="Email address" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+        <input id="loginPassword" type="password" placeholder="Password" class="w-full rounded-xl border border-black/10 px-4 py-3 bg-ivory">
+
+        <button onclick="handleLogin()" class="w-full py-3.5 rounded-xl bg-burgundy text-white font-semibold">
+          Sign In
+        </button>
+
+        <button onclick="showToast('Demo registration flow enabled for this prototype.')" class="w-full py-3.5 rounded-xl border border-burgundy/20 text-burgundy font-semibold">
+          Create New Account
+        </button>
+      </div>
+
+      <p class="text-xs text-muted text-center mt-5">
+        Demo account interface for the DressEase project.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ================= ADMIN DASHBOARD MODAL ================= -->
+  <div id="adminModal" class="hidden fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center">
+    <div class="bg-white rounded-[2rem] max-w-5xl w-full max-h-[90vh] overflow-y-auto custom-scroll p-7">
+
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-gold font-bold">Management Panel</p>
+          <h2 class="font-display text-3xl font-bold text-burgundy mt-1">Admin Dashboard</h2>
+        </div>
+        <button onclick="closeAdmin()" class="w-10 h-10 rounded-full bg-cream">✕</button>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
+
+        <div class="rounded-2xl bg-ivory p-5">
+          <p class="text-sm text-muted">Total Dresses</p>
+          <p id="adminDressCount" class="font-display text-3xl font-bold text-burgundy mt-2">0</p>
+        </div>
+
+        <div class="rounded-2xl bg-ivory p-5">
+          <p class="text-sm text-muted">Active Bookings</p>
+          <p class="font-display text-3xl font-bold text-burgundy mt-2">28</p>
+        </div>
+
+        <div class="rounded-2xl bg-ivory p-5">
+          <p class="text-sm text-muted">Returns Pending</p>
+          <p class="font-display text-3xl font-bold text-burgundy mt-2">7</p>
+        </div>
+
+        <div class="rounded-2xl bg-ivory p-5">
+          <p class="text-sm text-muted">This Month</p>
+          <p class="font-display text-3xl font-bold text-burgundy mt-2">₹1.8L</p>
+        </div>
+
+      </div>
+
+      <div class="mt-7 border border-black/5 rounded-2xl overflow-hidden">
+        <div class="p-5 bg-cream/50 flex justify-between items-center">
+          <h3 class="font-semibold">Recent Rental Requests</h3>
+          <span class="text-xs text-muted">Demo Data</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="border-t border-b border-black/5">
+              <tr>
+                <th class="text-left p-4">Customer</th>
+                <th class="text-left p-4">Dress</th>
+                <th class="text-left p-4">Dates</th>
+                <th class="text-left p-4">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-black/5">
+                <td class="p-4">Ananya</td>
+                <td class="p-4">Royal Maroon Lehenga</td>
+                <td class="p-4">Oct 12–14</td>
+                <td class="p-4"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">Confirmed</span></td>
+              </tr>
+              <tr class="border-b border-black/5">
+                <td class="p-4">Priya</td>
+                <td class="p-4">Champagne Gown</td>
+                <td class="p-4">Oct 18–20</td>
+                <td class="p-4"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs">Pending</span></td>
+              </tr>
+              <tr>
+                <td class="p-4">Rahul</td>
+                <td class="p-4">Black Sherwani</td>
+                <td class="p-4">Oct 22–23</td>
+                <td class="p-4"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs">Ready</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- TOAST -->
+  <div id="toast" class="hidden fixed bottom-6 left-1/2 z-[200] -translate-x-1/2 bg-burgundy text-white px-6 py-3 rounded-full shadow-luxury text-sm font-semibold"></div>
+
+
+  <script>
+
+    /* ============================================================
+       DRESSEASE CATALOG DATA
+    ============================================================ */
+
+    const dresses = [
+      {
+        id: 1,
+        name: "Royal Maroon Lehenga",
+        category: "Lehengas & Bridal Wear",
+        price: 2999,
+        deposit: 3000,
+        image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=85",
+        description: "A rich maroon bridal lehenga with an elegant embroidered finish, perfect for weddings and receptions.",
+        sizes: ["S", "M", "L", "XL"],
+        colours: ["Maroon", "Gold"],
+        occasions: ["Wedding", "Reception"],
+        featured: true
+      },
+      {
+        id: 2,
+        name: "Ivory Bridal Lehenga",
+        category: "Lehengas & Bridal Wear",
+        price: 4499,
+        deposit: 4500,
+        image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=700&q=85",
+        description: "Soft ivory bridal wear with detailed traditional work and a timeless silhouette.",
+        sizes: ["S", "M", "L"],
+        colours: ["Ivory", "Gold"],
+        occasions: ["Wedding", "Photoshoot"],
+        featured: true
+      },
+      {
+        id: 3,
+        name: "Emerald Silk Saree",
+        category: "Sarees & Traditional Wear",
+        price: 1899,
+        deposit: 2000,
+        image: "https://images.unsplash.com/photo-1610030469668-8e9f641aafc7?auto=format&fit=crop&w=700&q=85",
+        description: "Elegant emerald silk saree designed for festive celebrations and traditional occasions.",
+        sizes: ["S", "M", "L", "XL"],
+        colours: ["Green"],
+        occasions: ["Festival", "Wedding"],
+        featured: true
+      },
+      {
+        id: 4,
+        name: "Rose Gold Designer Saree",
+        category: "Sarees & Traditional Wear",
+        price: 2199,
+        deposit: 2200,
+        image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=85",
+        description: "A graceful rose gold statement saree with a modern party-ready finish.",
+        sizes: ["S", "M", "L"],
+        colours: ["Pink", "Gold"],
+        occasions: ["Reception", "Party"],
+        featured: false
+      },
+      {
+        id: 5,
+        name: "Champagne Evening Gown",
+        category: "Gowns & Party Wear",
+        price: 2499,
+        deposit: 2500,
+        image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=700&q=85",
+        description: "A sophisticated champagne gown designed for receptions, parties and evening events.",
+        sizes: ["S", "M", "L", "XL"],
+        colours: ["Gold", "Ivory"],
+        occasions: ["Reception", "Party"],
+        featured: true
+      },
+      {
+        id: 6,
+        name: "Midnight Black Gown",
+        category: "Gowns & Party Wear",
+        price: 2299,
+        deposit: 2500,
+        image: "https://images.unsplash.com/photo-1566174054248-2b4b8b6c9c4c?auto=format&fit=crop&w=700&q=85",
+        description: "A sophisticated black gown with a dramatic silhouette for evening occasions.",
+        sizes: ["S", "M", "L"],
+        colours: ["Black"],
+        occasions: ["Party", "Photoshoot"],
+        featured: true
+      },
+      {
+        id: 7,
+        name: "Classic Black Sherwani",
+        category: "Sherwanis & Men's Ethnic Wear",
+        price: 2799,
+        deposit: 3000,
+        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=700&q=85",
+        description: "A classic black sherwani with subtle detailing for weddings and formal celebrations.",
+        sizes: ["M", "L", "XL", "XXL"],
+        colours: ["Black"],
+        occasions: ["Wedding", "Reception"],
+        featured: true
+      },
+      {
+        id: 8,
+        name: "Ivory Embroidered Sherwani",
+        category: "Sherwanis & Men's Ethnic Wear",
+        price: 3199,
+        deposit: 3500,
+        image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=700&q=85",
+        description: "Premium ivory sherwani with traditional embroidery and a refined festive look.",
+        sizes: ["M", "L", "XL", "XXL"],
+        colours: ["Ivory", "Gold"],
+        occasions: ["Wedding", "Reception"],
+        featured: false
+      },
+      {
+        id: 9,
+        name: "Princess Pink Kids Dress",
+        category: "Kids' Occasion Wear",
+        price: 999,
+        deposit: 1200,
+        image: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=700&q=85",
+        description: "A charming occasion dress designed for little princesses and festive celebrations.",
+        sizes: ["XS", "S", "M"],
+        colours: ["Pink"],
+        occasions: ["Party", "Festival"],
+        featured: false
+      },
+      {
+        id: 10,
+        name: "Mini Gold Celebration Dress",
+        category: "Kids' Occasion Wear",
+        price: 1199,
+        deposit: 1400,
+        image: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=700&q=85",
+        description: "A playful gold occasion dress for birthdays, family celebrations and photoshoots.",
+        sizes: ["XS", "S", "M"],
+        colours: ["Gold", "Ivory"],
+        occasions: ["Party", "Photoshoot"],
+        featured: true
+      },
+      {
+        id: 11,
+        name: "Ruby Reception Gown",
+        category: "Gowns & Party Wear",
+        price: 3299,
+        deposit: 3500,
+        image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=700&q=85",
+        description: "A bold ruby gown created for glamorous receptions and evening celebrations.",
+        sizes: ["S", "M", "L"],
+        colours: ["Red"],
+        occasions: ["Reception", "Party"],
+        featured: true
+      },
+      {
+        id: 12,
+        name: "Classic Kanchipuram Style Saree",
+        category: "Sarees & Traditional Wear",
+        price: 1599,
+        deposit: 1800,
+        image: "https://images.unsplash.com/photo-1583391733981-5e8f7f7b5c2f?auto=format&fit=crop&w=700&q=85",
+        description: "A traditional silk-inspired saree suitable for festivals, poojas and family functions.",
+        sizes: ["S", "M", "L", "XL"],
+        colours: ["Red", "Gold"],
+        occasions: ["Festival", "Wedding"],
+        featured: false
+      }
+    ];
+
+
+    /* ============================================================
+       SPA SECTION NAVIGATION
+    ============================================================ */
+
+    function showSection(sectionId) {
+      document.querySelectorAll(".spa-section").forEach(section => {
+        section.classList.add("section-hidden");
+      });
+
+      const target = document.getElementById(sectionId);
+
+      if (target) {
+        target.classList.remove("section-hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.querySelectorAll(".nav-link").forEach(link => {
+        link.classList.remove("nav-active");
+      });
+
+      const activeNav = document.querySelector(`[data-nav="${sectionId}"]`);
+
+      if (activeNav) {
+        activeNav.classList.add("nav-active");
+      }
+
+      if (sectionId === "about") {
+        animateCounters();
+      }
+    }
+
+
+    function toggleMobileMenu() {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    }
+
+
+    /* ============================================================
+       CATALOG RENDERING & FILTERING
+    ============================================================ */
+
+    let currentCategory = "All";
+
+    function renderCatalog() {
+
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
+      const size = document.getElementById("sizeFilter").value;
+      const occasion = document.getElementById("occasionFilter").value;
+      const sort = document.getElementById("sortFilter").value;
+
+      let filtered = dresses.filter(dress => {
+
+        const categoryMatch =
+          currentCategory === "All" ||
+          dress.category === currentCategory;
+
+        const searchMatch =
+          dress.name.toLowerCase().includes(search) ||
+          dress.category.toLowerCase().includes(search) ||
+          dress.colours.join(" ").toLowerCase().includes(search);
+
+        const sizeMatch =
+          size === "All" ||
+          dress.sizes.includes(size);
+
+        const occasionMatch =
+          occasion === "All" ||
+          dress.occasions.includes(occasion);
+
+        return categoryMatch && searchMatch && sizeMatch && occasionMatch;
+      });
+
+      if (sort === "low") {
+        filtered.sort((a, b) => a.price - b.price);
+      }
+
+      if (sort === "high") {
+        filtered.sort((a, b) => b.price - a.price);
+      }
+
+      const grid = document.getElementById("catalogGrid");
+      const empty = document.getElementById("emptyState");
+
+      document.getElementById("catalogCount").textContent =
+        `${filtered.length} ${filtered.length === 1 ? "dress" : "dresses"} available`;
+
+      if (!filtered.length) {
+        grid.innerHTML = "";
+        empty.classList.remove("hidden");
+        return;
+      }
+
+      empty.classList.add("hidden");
+
+      grid.innerHTML = filtered.map(dress => `
+
+        <article class="dress-card bg-white rounded-3xl overflow-hidden shadow-soft border border-black/5">
+
+          <div class="relative overflow-hidden">
+            <img
+              src="${dress.image}"
+              alt="${dress.name}"
+              loading="lazy"
+              class="w-full h-80 object-cover"
+              onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%221000%22%3E%3Crect width=%22800%22 height=%221000%22 fill=%22%23F4EDE2%22/%3E%3Ctext x=%22400%22 y=%22500%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2240%22 fill=%22%236D1835%22%3EDressEase%3C/text%3E%3C/svg%3E'"
+            >
+
+            ${dress.featured ? `
+              <span class="absolute top-4 left-4 bg-white/90 backdrop-blur rounded-full px-3 py-1.5 text-xs font-bold text-burgundy">
+                ✦ Featured
+              </span>
+            ` : ""}
+
+            <button
+              onclick="openQuickView(${dress.id})"
+              class="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-white text-burgundy shadow-soft hover:bg-burgundy hover:text-white transition"
+              aria-label="View ${dress.name}"
+            >
+              ↗
+            </button>
+          </div>
+
+          <div class="p-5">
+
+            <p class="text-[10px] uppercase tracking-widest font-bold text-gold">
+              ${dress.category}
+            </p>
+
+            <h3 class="font-display text-xl font-bold text-burgundy mt-2">
+              ${dress.name}
+            </h3>
+
+            <p class="text-sm text-muted mt-2 line-clamp-2">
+              ${dress.description}
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              ${dress.sizes.map(s => `
+                <span class="text-[10px] px-2 py-1 rounded-md bg-cream text-burgundy font-semibold">${s}</span>
+              `).join("")}
+            </div>
+
+            <div class="flex items-end justify-between mt-5">
+              <div>
+                <p class="text-xs text-muted">Rental from</p>
+                <p class="font-bold text-burgundy">₹${dress.price.toLocaleString("en-IN")}</p>
+              </div>
+
+              <button
+                onclick="bookDress(${dress.id})"
+                class="px-4 py-2.5 rounded-full bg-burgundy text-white text-xs font-semibold hover:bg-burgundyDark transition"
+              >
+                Book Now
+              </button>
+            </div>
+
+          </div>
+        </article>
+
+      `).join("");
+    }
+
+
+    document.querySelectorAll(".filter-btn").forEach(button => {
+      button.addEventListener("click", () => {
+
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+          btn.classList.remove("bg-burgundy", "text-white");
+          btn.classList.add("bg-cream", "text-burgundy");
+        });
+
+        button.classList.remove("bg-cream", "text-burgundy");
+        button.classList.add("bg-burgundy", "text-white");
+
+        currentCategory = button.dataset.category;
+        renderCatalog();
+      });
+    });
+
+
+    document.getElementById("searchInput").addEventListener("input", renderCatalog);
+    document.getElementById("sizeFilter").addEventListener("change", renderCatalog);
+    document.getElementById("occasionFilter").addEventListener("change", renderCatalog);
+    document.getElementById("sortFilter").addEventListener("change", renderCatalog);
+
+
+    function clearFilters() {
+
+      currentCategory = "All";
+
+      document.getElementById("searchInput").value = "";
+      document.getElementById("sizeFilter").value = "All";
+      document.getElementById("occasionFilter").value = "All";
+      document.getElementById("sortFilter").value = "featured";
+
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("bg-burgundy", "text-white");
+        btn.classList.add("bg-cream", "text-burgundy");
+      });
+
+      const allBtn = document.querySelector('[data-category="All"]');
+      allBtn.classList.remove("bg-cream", "text-burgundy");
+      allBtn.classList.add("bg-burgundy", "text-white");
+
+      renderCatalog();
+    }
+
+
+    /* ============================================================
+       QUICK VIEW
+    ============================================================ */
+
+    function openQuickView(id) {
+
+      const dress = dresses.find(d => d.id === id);
+
+      if (!dress) return;
+
+      document.getElementById("modalImage").src = dress.image;
+      document.getElementById("modalCategory").textContent = dress.category;
+      document.getElementById("modalName").textContent = dress.name;
+      document.getElementById("modalDescription").textContent = dress.description;
+      document.getElementById("modalPrice").textContent = `₹${dress.price.toLocaleString("en-IN")}`;
+      document.getElementById("modalDeposit").textContent = `₹${dress.deposit.toLocaleString("en-IN")}`;
+
+      document.getElementById("modalSizes").innerHTML =
+        dress.sizes.map(size => `
+          <span class="px-3 py-1.5 rounded-lg bg-cream text-burgundy text-xs font-semibold">${size}</span>
+        `).join("");
+
+      document.getElementById("modalColours").innerHTML =
+        dress.colours.map(colour => `
+          <span class="px-3 py-1.5 rounded-lg bg-cream text-burgundy text-xs font-semibold">${colour}</span>
+        `).join("");
+
+      document.getElementById("modalBookButton").onclick = () => {
+        closeQuickView();
+        bookDress(dress.id);
+      };
+
+      document.getElementById("quickViewModal").classList.remove("hidden");
+    }
+
+
+    function closeQuickView() {
+      document.getElementById("quickViewModal").classList.add("hidden");
+    }
+
+
+    function bookDress(id) {
+
+      const dress = dresses.find(d => d.id === id);
+
+      if (!dress) return;
+
+      showSection("booking");
+
+      document.getElementById("bookingCategory").value = dress.category;
+
+      populateBookingDresses();
+
+      document.getElementById("bookingDress").value = dress.id;
+
+      updateEstimatedPrice();
+
+      setTimeout(() => {
+        document.getElementById("customerName").focus();
+      }, 500);
+    }
+
+
+    /* ============================================================
+       DYNAMIC BOOKING DROPDOWNS
+    ============================================================ */
+
+    document.getElementById("bookingCategory").addEventListener("change", populateBookingDresses);
+
+    function populateBookingDresses() {
+
+      const category = document.getElementById("bookingCategory").value;
+      const dressSelect = document.getElementById("bookingDress");
+
+      const filtered = dresses.filter(d => d.category === category);
+
+      dressSelect.innerHTML =
+        `<option value="">Select a dress</option>` +
+        filtered.map(dress => `
+          <option value="${dress.id}">
+            ${dress.name} — ₹${dress.price.toLocaleString("en-IN")}
+          </option>
+        `).join("");
+
+      updateEstimatedPrice();
+    }
+
+
+    document.getElementById("bookingDress").addEventListener("change", updateEstimatedPrice);
+
+    function updateEstimatedPrice() {
+
+      const id = Number(document.getElementById("bookingDress").value);
+
+      const priceElement = document.getElementById("estimatedPrice");
+      const depositElement = document.getElementById("estimatedDeposit");
+
+      const dress = dresses.find(d => d.id === id);
+
+      if (!dress) {
+        priceElement.textContent = "Select a dress";
+        depositElement.textContent = "—";
+        return;
+      }
+
+      priceElement.textContent = `₹${dress.price.toLocaleString("en-IN")} / rental`;
+      depositElement.textContent = `₹${dress.deposit.toLocaleString("en-IN")}`;
+    }
+
+
+    /* ============================================================
+       DATE AVAILABILITY
+    ============================================================ */
+
+    const startDateInput = document.getElementById("startDate");
+    const returnDateInput = document.getElementById("returnDate");
+
+    const today = new Date();
+    const todayISO = today.toISOString().split("T")[0];
+
+    startDateInput.min = todayISO;
+    returnDateInput.min = todayISO;
+
+    startDateInput.addEventListener("change", () => {
+
+      returnDateInput.min = startDateInput.value;
+
+      if (returnDateInput.value && returnDateInput.value < startDateInput.value) {
+        returnDateInput.value = "";
+      }
+
+      checkAvailability();
+    });
+
+    returnDateInput.addEventListener("change", checkAvailability);
+    document.getElementById("bookingDress").addEventListener("change", checkAvailability);
+
+
+    function checkAvailability() {
+
+      const dressId = Number(document.getElementById("bookingDress").value);
+      const start = startDateInput.value;
+      const end = returnDateInput.value;
+      const box = document.getElementById("availabilityBox");
+
+      if (!dressId || !start || !end) {
+        box.classList.add("hidden");
+        return;
+      }
+
+      if (new Date(end) <= new Date(start)) {
+        box.className = "mt-5 rounded-xl p-4 text-sm bg-red-50 text-red-700 border border-red-100";
+        box.textContent = "Return date must be after the rental start date.";
+        box.classList.remove("hidden");
+        return;
+      }
+
+      const selectedDress = dresses.find(d => d.id === dressId);
+
+      box.className = "mt-5 rounded-xl p-4 text-sm bg-green-50 text-green-700 border border-green-100";
+      box.innerHTML = `
+        <strong>✓ Availability Check Passed</strong><br>
+        ${selectedDress.name} can be requested for ${formatDate(start)} to ${formatDate(end)}.
+        Final availability will be confirmed by the DressEase booking team.
+      `;
+
+      box.classList.remove("hidden");
+    }
+
+
+    function formatDate(dateString) {
+
+      if (!dateString) return "";
+
+      return new Date(dateString + "T00:00:00").toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+
+    /* ============================================================
+       WHATSAPP BOOKING FORM
+    ============================================================ */
+
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const category = document.getElementById("bookingCategory").value;
+      const dressId = Number(document.getElementById("bookingDress").value);
+      const occasion = document.getElementById("bookingOccasion").value;
+      const size = document.getElementById("bookingSize").value;
+      const start = document.getElementById("startDate").value;
+      const end = document.getElementById("returnDate").value;
+      const colour = document.getElementById("bookingColour").value;
+      const budget = document.getElementById("bookingBudget").value;
+      const notes = document.getElementById("notes").value.trim();
+
+      const dress = dresses.find(d => d.id === dressId);
+
+      if (!dress) {
+        showToast("Please select a dress.");
+        return;
+      }
+
+      if (new Date(end) <= new Date(start)) {
+        showToast("Please select valid rental dates.");
+        return;
+      }
+
+      const message =
+`Hello DressEase! 👗
+
+I would like to request a dress rental booking.
+
+*Customer Details*
+Name: ${name}
+Phone: ${phone}
+
+*Dress Details*
+Category: ${category}
+Dress: ${dress.name}
+Occasion: ${occasion}
+Size: ${size}
+Preferred Colour: ${colour}
+Budget: ${budget === "Any" ? "Any Budget" : "Under ₹" + Number(budget).toLocaleString("en-IN")}
+
+*Rental Dates*
+Start Date: ${formatDate(start)}
+Return Date: ${formatDate(end)}
+
+*Estimated Rental*
+₹${dress.price.toLocaleString("en-IN")}
+Security Deposit: ₹${dress.deposit.toLocaleString("en-IN")}
+
+*Additional Requirements*
+${notes || "None"}
+
+Please confirm availability and booking details. Thank you!`;
+
+      const whatsappURL =
+        `https://wa.me/919952030026?text=${encodeURIComponent(message)}`;
+
+      window.open(whatsappURL, "_blank");
+
+      showToast("Booking request prepared successfully!");
+    });
+
+
+    /* ============================================================
+       LOGIN
+    ============================================================ */
+
+    function openLogin() {
+      document.getElementById("loginModal").classList.remove("hidden");
+    }
+
+    function closeLogin() {
+      document.getElementById("loginModal").classList.add("hidden");
+    }
+
+    function handleLogin() {
+
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
+      if (!email || !password) {
+        showToast("Please enter your email and password.");
+        return;
+      }
+
+      closeLogin();
+      showToast("Demo login successful!");
+    }
+
+
+    /* ============================================================
+       ADMIN DASHBOARD
+    ============================================================ */
+
+    function openAdmin() {
+      document.getElementById("adminDressCount").textContent = dresses.length;
+      document.getElementById("adminModal").classList.remove("hidden");
+    }
+
+    function closeAdmin() {
+      document.getElementById("adminModal").classList.add("hidden");
+    }
+
+
+    /* ============================================================
+       COUNTER ANIMATION
+    ============================================================ */
+
+    let countersAnimated = false;
+
+    function animateCounters() {
+
+      if (countersAnimated) return;
+
+      countersAnimated = true;
+
+      document.querySelectorAll(".counter").forEach(counter => {
+
+        const target = Number(counter.dataset.target);
+        const duration = 1200;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+
+          counter.textContent = Math.floor(target * eased).toLocaleString("en-IN");
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            counter.textContent = target.toLocaleString("en-IN");
+          }
+        }
+
+        requestAnimationFrame(update);
+      });
+    }
+
+
+    /* ============================================================
+       TOAST
+    ============================================================ */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.remove("hidden");
+      toast.classList.add("toast");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+        toast.classList.add("hidden");
+        toast.classList.remove("toast");
+      }, 3200);
+    }
+
+
+    /* ============================================================
+       MODAL OUTSIDE CLICK
+    ============================================================ */
+
+    document.getElementById("quickViewModal").addEventListener("click", function(event) {
+      if (event.target === this) closeQuickView();
+    });
+
+    document.getElementById("loginModal").addEventListener("click", function(event) {
+      if (event.target === this) closeLogin();
+    });
+
+    document.getElementById("adminModal").addEventListener("click", function(event) {
+      if (event.target === this) closeAdmin();
+    });
+
+
+    /* ============================================================
+       KEYBOARD ESCAPE
+    ============================================================ */
+
+    document.addEventListener("keydown", function(event) {
+
+      if (event.key === "Escape") {
+        closeQuickView();
+        closeLogin();
+        closeAdmin();
+      }
+    });
+
+
+    /* ============================================================
+       INITIALIZATION
+    ============================================================ */
+
+    renderCatalog();
+
+    // Set minimum date to today.
+    startDateInput.min = todayISO;
+    returnDateInput.min = todayISO;
+
+  </script>
+
+</body>
+</html>
